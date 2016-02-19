@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/08 16:54:18 by telain            #+#    #+#             */
+/*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
 /*   Updated: 2016/02/19 19:18:26 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-int		main(void)
+# define BUFF_SIZE 1
+# include <stdio.h>
+# include "libft.h"
+# include <stdlib.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <unistd.h>
+
+typedef struct t_value
 {
-	char	**pline;
-	char	*line;
-	int		fd;
+	int		backslash;
+	int		lines;
+	int		start;
+	char	buff[BUFF_SIZE + 1];
+	char	*str;
+}				s_value;
 
-	pline = &line;
-	fd = open("fichier", O_RDONLY, S_IREAD);
-	if (get_next_line(fd, pline) != -1)
-		ft_putendl(line);
-//	if (get_next_line(fd, pline) != -1)
-//		ft_putendl(line);
-//	if (get_next_line(fd, pline) != -1)
-//		ft_putendl(line);
-	return (0);
-}
+int		get_next_line(const int fd, char **line);
+
+#endif
