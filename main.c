@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/08 16:54:18 by telain            #+#    #+#             */
-/*   Updated: 2016/02/19 19:18:26 by telain           ###   ########.fr       */
+/*   Updated: 2016/02/19 19:40:00 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,7 @@ int		main(void)
 
 	pline = &line;
 	fd = open("fichier", O_RDONLY, S_IREAD);
-	if (get_next_line(fd, pline) != -1)
-		ft_putendl(line);
-//	if (get_next_line(fd, pline) != -1)
-//		ft_putendl(line);
-//	if (get_next_line(fd, pline) != -1)
-//		ft_putendl(line);
+	while (get_next_line(fd, pline) == 1)
+		ft_putstr(line);
 	return (0);
 }
