@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
-/*   Updated: 2016/02/19 19:40:00 by telain           ###   ########.fr       */
+/*   Updated: 2016/02/21 15:39:02 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ typedef struct t_value
 }				s_value;
 
 int		get_next_line(const int fd, char **line);
+void	display_line(char *line, int n);
 
 #endif

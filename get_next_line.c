@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:08:42 by telain            #+#    #+#             */
-/*   Updated: 2016/02/19 19:40:00 by telain           ###   ########.fr       */
+/*   Updated: 2016/02/21 18:14:51 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,15 @@ int		get_next_line(const int fd, char **line)
 	if (ret == 0)
 		return (0);
 	value->str = ft_strcat(value->str, value->buff);
-	value->backslash = find_backslash(value->str, value->start, value->lines);
+//	if (value->lines == 2)
+//		ft_putendl(value->str);
+	value->backslash = find_backslash(value->str, value->start + 1, value->lines);
 	if (value->backslash != -1)
 	{
-		value->lines++;
+/*		ft_putstr("ligne avant le renvoi\n######\n");
+		ft_putstr(value->str);
+		ft_putstr("\n#######\n");
+	*/	value->lines++;
 		*line = cpy_line(value->str, value->start);
 		value->start = value->backslash + 1;
 		return (1);
