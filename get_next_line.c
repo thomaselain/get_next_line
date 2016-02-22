@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:08:42 by telain            #+#    #+#             */
-/*   Updated: 2016/02/21 18:14:51 by telain           ###   ########.fr       */
+/*   Updated: 2016/02/22 06:27:21 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 char	*cpy_line(char *s, int start)
 {
 	int		i;
+	int		size;
+	int		backup;
 	char	*line;
 
+	size = 0;
+	backup = start;
 	i = 0;
-	line = malloc(1000);
-	while (s[start] != '\n')
-	{
-		line[i++] = s[start++];
-	}
+	while (s[++start] != '\n')
+		size++;
+	line = malloc(size + 1);
+	while (s[++backup] != '\n')
+		line[i++] = s[backup];
 	return (line);
 }
 
@@ -43,11 +47,11 @@ int		find_backslash(char *s, int backslash, int lines)
 	return (-1);
 }
 
-s_value	*new_value(void)
+t_value	*new_value(void)
 {
-	s_value	*new;
+	t_value	*new;
 
-	new = malloc(sizeof(struct t_value));
+	new = malloc(sizeof(struct s_value));
 	new->str = malloc(sizeof(char) * BUFF_SIZE + 1);
 	new->backslash = -1;
 	new->lines = 0;
@@ -57,7 +61,7 @@ s_value	*new_value(void)
 
 int		get_next_line(const int fd, char **line)
 {
-	static s_value	*value = NULL;
+	static t_value	*value = NULL;
 	int				ret;
 
 	if (value == NULL)
@@ -67,15 +71,10 @@ int		get_next_line(const int fd, char **line)
 	if (ret == 0)
 		return (0);
 	value->str = ft_strcat(value->str, value->buff);
-//	if (value->lines == 2)
-//		ft_putendl(value->str);
 	value->backslash = find_backslash(value->str, value->start + 1, value->lines);
 	if (value->backslash != -1)
 	{
-/*		ft_putstr("ligne avant le renvoi\n######\n");
-		ft_putstr(value->str);
-		ft_putstr("\n#######\n");
-	*/	value->lines++;
+		value->lines++;
 		*line = cpy_line(value->str, value->start);
 		value->start = value->backslash + 1;
 		return (1);
