@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:08:42 by telain            #+#    #+#             */
-/*   Updated: 2016/02/22 06:27:21 by telain           ###   ########.fr       */
+/*   Updated: 2016/02/25 19:24:38 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ char	*cpy_line(char *s, int start)
 	size = 0;
 	backup = start;
 	i = 0;
-	while (s[++start] != '\n')
+	while (s[start++] != '\n')
 		size++;
-	line = malloc(size + 1);
-	while (s[++backup] != '\n')
-		line[i++] = s[backup];
+	line = ft_memalloc(size + 1);
+	line[size] = '\0';
+	while (s[backup] != '\n')
+		line[i++] = s[backup++];
 	return (line);
 }
 
@@ -70,8 +71,9 @@ int		get_next_line(const int fd, char **line)
 	value->buff[ret] = '\0';
 	if (ret == 0)
 		return (0);
+	value->backslash = find_backslash(value->str,
+			value->start + 1, value->lines);
 	value->str = ft_strcat(value->str, value->buff);
-	value->backslash = find_backslash(value->str, value->start + 1, value->lines);
 	if (value->backslash != -1)
 	{
 		value->lines++;
