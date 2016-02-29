@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
-/*   Updated: 2016/02/28 23:17:42 by telain           ###   ########.fr       */
+/*   Created: 2015/11/23 12:00:21 by telain            #+#    #+#             */
+/*   Updated: 2015/12/17 17:51:21 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
+#include <stdlib.h>
 
-# define BUFF_SIZE 1
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
-
-typedef struct	s_value
+char	*ft_strdup(const char *str)
 {
-	char		buff[BUFF_SIZE + 1];
-	char		*str;
-	char		*tmp;
-	int			backslash;
-	int			start;
-}				t_value;
+	int		len;
+	char	*copy;
+	int		i;
 
-int				get_next_line(const int fd, char **line);
-
-#endif
+	i = 0;
+	len = 0;
+	while (str[len++])
+		;
+	if (!(copy = (char*)malloc(sizeof(char) * len)))
+		return (NULL);
+	while (i < len)
+	{
+		copy[i] = str[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
+}

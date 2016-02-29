@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 11:54:53 by telain            #+#    #+#             */
-/*   Updated: 2016/02/19 15:28:06 by telain           ###   ########.fr       */
+/*   Updated: 2016/02/29 00:52:10 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define BUF_SIZE 1000
 # include <unistd.h>
 # include <string.h>
+# include <stdlib.h>
 
 typedef struct	s_list
 {

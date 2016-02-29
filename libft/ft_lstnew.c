@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
-/*   Updated: 2016/02/28 23:17:42 by telain           ###   ########.fr       */
+/*   Created: 2015/12/03 17:39:20 by telain            #+#    #+#             */
+/*   Updated: 2015/12/17 18:00:37 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
+#include <stdlib.h>
 
-# define BUFF_SIZE 1
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
-
-typedef struct	s_value
+t_list	*ft_lstnew(void const *content, size_t content_size)
 {
-	char		buff[BUFF_SIZE + 1];
-	char		*str;
-	char		*tmp;
-	int			backslash;
-	int			start;
-}				t_value;
+	t_list	*new;
 
-int				get_next_line(const int fd, char **line);
-
-#endif
+	if (!(new = malloc(sizeof(t_list))))
+		return (NULL);
+	if (!content)
+	{
+		new->content = 0;
+		new->content_size = 0;
+	}
+	else
+	{
+		new->content = (void*)content;
+		new->content_size = content_size;
+	}
+	new->next = NULL;
+	return (new);
+}

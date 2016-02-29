@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
-/*   Updated: 2016/02/28 23:17:42 by telain           ###   ########.fr       */
+/*   Created: 2015/11/25 12:44:33 by telain            #+#    #+#             */
+/*   Updated: 2015/12/17 17:25:44 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# define BUFF_SIZE 1
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
-
-typedef struct	s_value
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	char		buff[BUFF_SIZE + 1];
-	char		*str;
-	char		*tmp;
-	int			backslash;
-	int			start;
-}				t_value;
+	unsigned char	i;
+	unsigned char	*tmp1;
+	unsigned char	*tmp2;
+	unsigned char	letter;
 
-int				get_next_line(const int fd, char **line);
-
-#endif
+	tmp1 = (unsigned char*)dst;
+	tmp2 = (unsigned char*)src;
+	letter = (unsigned char)c;
+	i = 0;
+	while (i < n)
+	{
+		if ((*tmp1++ = *tmp2++) == letter)
+			return (tmp1);
+		i++;
+	}
+	return (NULL);
+}

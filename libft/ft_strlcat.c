@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
-/*   Updated: 2016/02/28 23:17:42 by telain           ###   ########.fr       */
+/*   Created: 2015/11/26 13:28:02 by telain            #+#    #+#             */
+/*   Updated: 2015/12/02 14:49:37 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# define BUFF_SIZE 1
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
-
-typedef struct	s_value
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	char		buff[BUFF_SIZE + 1];
-	char		*str;
-	char		*tmp;
-	int			backslash;
-	int			start;
-}				t_value;
+	size_t	i;
+	size_t	i2;
 
-int				get_next_line(const int fd, char **line);
-
-#endif
+	i = 0;
+	while (dst[i] && i < size)
+		i++;
+	i2 = i;
+	while (src[i - i2] && i < size - 1)
+	{
+		dst[i] = src[i - i2];
+		i++;
+	}
+	if (i2 < size)
+		dst[i] = '\0';
+	return (i2 + ft_strlen(src));
+}
