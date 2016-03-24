@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
-/*   Updated: 2016/03/02 20:07:08 by telain           ###   ########.fr       */
+/*   Created: 2015/11/27 17:09:59 by qhonore           #+#    #+#             */
+/*   Updated: 2016/02/29 00:49:38 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../includes/libft.h"
 
-# define BUFF_SIZE 1
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
-
-typedef struct	s_value
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char		buff[BUFF_SIZE + 1];
-	char		*str;
-	int			backslash;
-	int			start;
-}				t_value;
+	char	*str;
 
-int				get_next_line(const int fd, char **line);
-
-#endif
+	if (!s1 && s2)
+		return (ft_strdup(s2));
+	else if (!s2 && s1)
+		return (ft_strdup(s1));
+	else if (!s1 && !s2)
+		return (NULL);
+	str = (char*)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!str)
+		return (NULL);
+	str = ft_strcpy(str, s1);
+	str = ft_strcat(str, s2);
+	return (str);
+}

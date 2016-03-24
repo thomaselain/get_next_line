@@ -6,7 +6,7 @@
 /*   By: telain <telain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/26 16:10:35 by telain            #+#    #+#             */
-/*   Updated: 2016/02/29 00:54:34 by telain           ###   ########.fr       */
+/*   Updated: 2016/03/11 18:26:12 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ int		find_size(char *str, int start)
 	int		i;
 
 	i = 0;
-	while (str[start++] != '\n')
+	while (str[start] != '\n' && str[start] != -1)
+	{
+		start++;
 		i++;
+	}
 	return (i);
 }
 
@@ -39,7 +42,7 @@ int		find_backslash(char *str, int start)
 	i = start;
 	while (str[i])
 	{
-		if (str[i] == '\n')
+		if (str[i] == '\n' || str[i] == -1)
 			return (i);
 		i++;
 	}

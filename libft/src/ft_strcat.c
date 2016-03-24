@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
-/*   Updated: 2016/03/02 20:07:08 by telain           ###   ########.fr       */
+/*   Created: 2015/11/23 15:25:45 by telain            #+#    #+#             */
+/*   Updated: 2016/02/19 16:01:39 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../includes/libft.h"
 
-# define BUFF_SIZE 1
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
-
-typedef struct	s_value
+char	*ft_strcat(char *str, const char *str2)
 {
-	char		buff[BUFF_SIZE + 1];
-	char		*str;
-	int			backslash;
-	int			start;
-}				t_value;
+	int		i;
+	int		i2;
 
-int				get_next_line(const int fd, char **line);
-
-#endif
+	i = 0;
+	i2 = 0;
+	while (str[i])
+		i++;
+	while (str2[i2])
+		str[i++] = str2[i2++];
+	str[i] = '\0';
+	return (str);
+}

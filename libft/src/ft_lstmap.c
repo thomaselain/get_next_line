@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
-/*   Updated: 2016/03/02 20:07:08 by telain           ###   ########.fr       */
+/*   Created: 2015/12/03 17:44:18 by telain            #+#    #+#             */
+/*   Updated: 2015/12/12 13:44:08 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../includes/libft.h"
 
-# define BUFF_SIZE 1
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
-
-typedef struct	s_value
+t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	char		buff[BUFF_SIZE + 1];
-	char		*str;
-	int			backslash;
-	int			start;
-}				t_value;
+	t_list	*new;
+	t_list	*start;
+	t_list	*tmp;
 
-int				get_next_line(const int fd, char **line);
-
-#endif
+	tmp = f(lst);
+	new = ft_lstnew(tmp->content, tmp->content_size);
+	start = new;
+	while (lst->next)
+	{
+		tmp = f(lst->next);
+		new->next = ft_lstnew(tmp->content, tmp->content_size);
+		new = new->next;
+		lst = lst->next;
+	}
+	return (start);
+}
