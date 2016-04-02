@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
-/*   Updated: 2016/04/02 18:58:16 by telain           ###   ########.fr       */
+/*   Updated: 2016/04/02 21:25:22 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 # include <sys/uio.h>
 # include <unistd.h>
 
-typedef struct	s_value
+typedef struct	s_gnl
 {
 	char		buff[BUFF_SIZE + 1];
 	char		*str;
 	int			backslash;
 	int			start;
 	int			end;
-}				t_value;
+}				t_gnl;
 
 int				get_next_line(const int fd, char **line);
 

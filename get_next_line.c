@@ -6,17 +6,17 @@
 /*   By: telain <telain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/26 16:10:35 by telain            #+#    #+#             */
-/*   Updated: 2016/04/02 20:58:27 by telain           ###   ########.fr       */
+/*   Updated: 2016/04/02 21:38:47 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_value		*new_value(void)
+t_gnl	*new_gnl(void)
 {
-	t_value			*new;
+	t_gnl			*new;
 	
-	new = ft_memalloc(sizeof(struct s_value));
+	new = ft_memalloc(sizeof(struct s_gnl));
 	new->str = ft_strnew(BUFF_SIZE * 2 + 1);
 	new->start = 0;
 	new->end = 0;
@@ -36,7 +36,7 @@ int		find_size(char *str, int start)
 	return (i);
 }
 
-int		find_backslash(char *str, int start, int fct)
+int		find_back(char *str, int start, int fct)
 {
 	int		i;
 
@@ -60,43 +60,44 @@ int		find_backslash(char *str, int start, int fct)
 	return (0);
 }
 
-int		sub_cpy(t_value *value, char **line, int ret)
+int		sub_cpy(t_gnl *gnl, char **line, int ret)
 {
 	if (ret == 0)
 	{
-		*line = ft_strsub(value->str, value->start,	find_backslash(value->str, value->start, 0));
-		value->end = 1;
+		*line = ft_strsub(gnl->str, gnl->start,	find_back(gnl->str, gnl->start, 0));
+		gnl->end = 1;
 		return (0);
 	}
 	else
 	{
-		*line = ft_strsub(value->str, value->start, find_size(value->str, value->start));
-		value->start = find_backslash(value->str, value->start, 1) + 1;
+		*line = ft_strsub(gnl->str, gnl->start, find_size(gnl->str, gnl->start));
+		gnl->start = find_back(gnl->str, gnl->start, 1) + 1;
 		return (1);
 	}
 }
 
 int		get_next_line(const int fd, char **line)
 {
-	static t_value	*value = NULL;
+	static t_gnl	*gnl = NULL;
 	int				ret;
 
 	if (fd < 0 || BUFF_SIZE < 1)
 		return (-1);
-	if (value == NULL)
-		value = new_value();
-	if (value->end == 1)
+	if (gnl == NULL)
+		gnl = new_gnl();
+	if (gnl->end == 1)
 	{
 		*line = NULL;
-		free(value);
+		free(gnl);
 		return (0);
 	}
-	while (find_backslash(value->str, value->start, 1) == -1 && ret > 0)
+	while (find_back(gnl->str, gnl->start, 1) == -1 && ret > 0)
 	{
-		ret = read(fd, value->buff, BUFF_SIZE);
-		value->buff[ret] = '\0';
-		value->str = ft_strjoin(value->str, value->buff);
+
+		ret = read(fd, gnl->buff, BUFF_SIZE);
+		gnl->buff[ret] = '\0';
+		gnl->str = ft_strjoin(gnl->str, gnl->buff);
 	}
-	sub_cpy(value, line, ret);
+	sub_cpy(gnl, line, ret);
 	return (1);
 }
