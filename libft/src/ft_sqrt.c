@@ -6,25 +6,31 @@
 /*   By: telain <telain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 15:46:39 by telain            #+#    #+#             */
-/*   Updated: 2016/03/24 16:11:46 by telain           ###   ########.fr       */
+/*   Updated: 2016/03/28 16:21:42 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/libft.h"
+
 int	ft_sqrt(int nb)
 {
-	int i;
-	int sq;
+	int	res;
+	int	i;
 
-	i = 1;
-	sq = 1;
-	if (nb == 0)
-		return (0);
-	while (i * i < nb)
+	res = 0;
+	i = 1 << 30;
+	while (i > nb)
+		i >>= 2;
+	while (i != 0)
 	{
-		i++;
+		if (nb >= res + i)
+		{
+			nb -= res + i;
+			res = (res >> 1) + i;
+		}
+		else
+			res >>= 1;
+		i >>= 2;
 	}
-	if ((nb % i) == 0)
-		return (i);
-	else
-		return (0);
+	return (res);
 }

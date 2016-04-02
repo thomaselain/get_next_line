@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
-/*   Updated: 2016/03/02 20:07:08 by telain           ###   ########.fr       */
+/*   Updated: 2016/04/02 18:58:16 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define BUFF_SIZE 1
 # include <stdlib.h>
-# include "libft/libft.h"
+# include "libft/includes/libft.h"
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/uio.h>
@@ -27,6 +27,7 @@ typedef struct	s_value
 	char		*str;
 	int			backslash;
 	int			start;
+	int			end;
 }				t_value;
 
 int				get_next_line(const int fd, char **line);
