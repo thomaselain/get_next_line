@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
-/*   Updated: 2016/04/02 21:25:22 by telain           ###   ########.fr       */
+/*   Updated: 2016/04/05 21:24:18 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,13 @@ typedef struct	s_gnl
 	int			backslash;
 	int			start;
 	int			end;
+	int			fd;
 }				t_gnl;
 
 int				get_next_line(const int fd, char **line);
+t_gnl			*new_gnl(int fd);
+int				find_size(char *str, int start);
+int				find_back(char *str, int start, int fct);
+int				sub_cpy(t_gnl *gnl, char **line, int ret);
 
 #endif

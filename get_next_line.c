@@ -6,20 +6,21 @@
 /*   By: telain <telain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/26 16:10:35 by telain            #+#    #+#             */
-/*   Updated: 2016/04/02 21:38:47 by telain           ###   ########.fr       */
+/*   Updated: 2016/04/06 15:42:51 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_gnl	*new_gnl(void)
+t_gnl	*new_gnl(int fd)
 {
 	t_gnl			*new;
-	
-	new = ft_memalloc(sizeof(struct s_gnl));
-	new->str = ft_strnew(BUFF_SIZE * 2 + 1);
+
+	new = ft_memalloc(sizeof(new));
+	new->str = ft_strnew(BUFF_SIZE + 1);
 	new->start = 0;
 	new->end = 0;
+	new->fd = fd;
 	return (new);
 }
 
@@ -45,7 +46,7 @@ int		find_back(char *str, int start, int fct)
 	{
 		while (str[i])
 		{
-			if (str[i] == '\n')
+			if (str[i] == '\n' || str[i] == -1)
 				return (i);
 			i++;
 		}
@@ -64,13 +65,18 @@ int		sub_cpy(t_gnl *gnl, char **line, int ret)
 {
 	if (ret == 0)
 	{
-		*line = ft_strsub(gnl->str, gnl->start,	find_back(gnl->str, gnl->start, 0));
 		gnl->end = 1;
-		return (0);
+		*line = ft_strsub(gnl->str, gnl->start,
+				find_back(gnl->str, gnl->start, 0));
+		if (gnl->str[gnl->start - 1] == '\n'
+				&& gnl->str[gnl->start] == '\0')
+			return (0);
+		return (1);
 	}
 	else
 	{
-		*line = ft_strsub(gnl->str, gnl->start, find_size(gnl->str, gnl->start));
+		*line = ft_strsub(gnl->str, gnl->start,
+				find_size(gnl->str, gnl->start));
 		gnl->start = find_back(gnl->str, gnl->start, 1) + 1;
 		return (1);
 	}
@@ -84,20 +90,19 @@ int		get_next_line(const int fd, char **line)
 	if (fd < 0 || BUFF_SIZE < 1)
 		return (-1);
 	if (gnl == NULL)
-		gnl = new_gnl();
+		gnl = new_gnl(fd);
 	if (gnl->end == 1)
 	{
-		*line = NULL;
-		free(gnl);
+		*line = ft_strnew(0);
+		ft_memdel((void**)&gnl);
 		return (0);
 	}
 	while (find_back(gnl->str, gnl->start, 1) == -1 && ret > 0)
 	{
-
-		ret = read(fd, gnl->buff, BUFF_SIZE);
+		if ((ret = read(fd, gnl->buff, BUFF_SIZE)) == -1)
+			return (-1);
 		gnl->buff[ret] = '\0';
 		gnl->str = ft_strjoin(gnl->str, gnl->buff);
 	}
-	sub_cpy(gnl, line, ret);
-	return (1);
+	return(sub_cpy(gnl, line, ret));
 }
