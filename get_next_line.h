@@ -6,14 +6,14 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:05:32 by telain            #+#    #+#             */
-/*   Updated: 2016/04/05 21:24:18 by telain           ###   ########.fr       */
+/*   Updated: 2016/04/19 18:12:06 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFF_SIZE 1
+# define BUFF_SIZE 52
 # include <stdlib.h>
 # include "libft/includes/libft.h"
 # include <fcntl.h>
@@ -31,8 +31,8 @@ typedef struct	s_gnl
 	int			fd;
 }				t_gnl;
 
-int				get_next_line(const int fd, char **line);
 t_gnl			*new_gnl(int fd);
+int				get_next_line(const int fd, char **line);
 int				find_size(char *str, int start);
 int				find_back(char *str, int start, int fct);
 int				sub_cpy(t_gnl *gnl, char **line, int ret);

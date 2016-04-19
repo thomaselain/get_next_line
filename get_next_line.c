@@ -6,7 +6,7 @@
 /*   By: telain <telain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/26 16:10:35 by telain            #+#    #+#             */
-/*   Updated: 2016/04/06 15:42:51 by telain           ###   ########.fr       */
+/*   Updated: 2016/04/19 18:15:25 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_gnl	*new_gnl(int fd)
 	t_gnl			*new;
 
 	new = ft_memalloc(sizeof(new));
-	new->str = ft_strnew(BUFF_SIZE + 1);
+	new->str = ft_strnew(BUFF_SIZE);
 	new->start = 0;
 	new->end = 0;
 	new->fd = fd;
@@ -94,7 +94,7 @@ int		get_next_line(const int fd, char **line)
 	if (gnl->end == 1)
 	{
 		*line = ft_strnew(0);
-		ft_memdel((void**)&gnl);
+		ft_memdel((void**)gnl);
 		return (0);
 	}
 	while (find_back(gnl->str, gnl->start, 1) == -1 && ret > 0)
