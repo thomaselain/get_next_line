@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/08 16:43:55 by telain            #+#    #+#             */
-/*   Updated: 2016/05/08 16:43:57 by telain           ###   ########.fr       */
+/*   Updated: 2016/05/09 17:07:29 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define GET_NEXT_LINE_H
 
 # include "libft/includes/libft.h"
-# include <stdio.h>
 # include <fcntl.h>
 # define BUFF_SIZE 9999
 
