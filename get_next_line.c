@@ -3,106 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: telain <telain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/26 16:10:35 by telain            #+#    #+#             */
-/*   Updated: 2016/04/19 18:15:25 by telain           ###   ########.fr       */
+/*   Created: 2016/05/08 16:43:33 by telain            #+#    #+#             */
+/*   Updated: 2016/05/08 16:43:35 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_gnl	*new_gnl(int fd)
+t_gnl		*new_struct(t_gnl *new)
 {
-	t_gnl			*new;
-
-	new = ft_memalloc(sizeof(new));
-	new->str = ft_strnew(BUFF_SIZE);
+	new = ft_memalloc(sizeof(t_gnl));
+	new->str = ft_strnew(BUFF_SIZE + 1);
+	new->buf[BUFF_SIZE] = '\0';
 	new->start = 0;
 	new->end = 0;
-	new->fd = fd;
 	return (new);
 }
 
-int		find_size(char *str, int start)
+int			find_len(char *str, int start)
 {
 	int		i;
 
 	i = 0;
-	while (str[start] != '\n' && str[start] != '\0')
-	{
-		start++;
+	while (str[start++] != '\n' && str[start] != '\0')
 		i++;
-	}
 	return (i);
 }
 
-int		find_back(char *str, int start, int fct)
+int			find_bn(char *str, int start, int on)
 {
-	int		i;
+	int index;
 
-	i = start;
-	if (fct == 1)
+	index = 0;
+	if (on == 1)
 	{
-		while (str[i])
+		while (str[start] != '\0')
 		{
-			if (str[i] == '\n' || str[i] == -1)
-				return (i);
-			i++;
+			if (str[start] == '\n')
+				return (start);
+			start++;
 		}
 		return (-1);
 	}
-	else
+	else if (on == 0)
 	{
 		while (str[start++] != '\0')
-			i++;
-		return (i);
+			index++;
+		return (index);
 	}
 	return (0);
 }
 
-int		sub_cpy(t_gnl *gnl, char **line, int ret)
+int			sub_cpy(t_gnl *gnl, char **line, int ret)
 {
 	if (ret == 0)
 	{
-		gnl->end = 1;
 		*line = ft_strsub(gnl->str, gnl->start,
-				find_back(gnl->str, gnl->start, 0));
+			find_bn(gnl->str, gnl->start, 0));
+		gnl->end = 1;
 		if (gnl->str[gnl->start - 1] == '\n'
-				&& gnl->str[gnl->start] == '\0')
+			&& gnl->str[gnl->start] == '\0')
 			return (0);
 		return (1);
 	}
 	else
 	{
 		*line = ft_strsub(gnl->str, gnl->start,
-				find_size(gnl->str, gnl->start));
-		gnl->start = find_back(gnl->str, gnl->start, 1) + 1;
+			find_len(gnl->str, gnl->start));
+		gnl->start = find_bn(gnl->str, gnl->start, 1) + 1;
 		return (1);
 	}
 }
 
-int		get_next_line(const int fd, char **line)
+int			get_next_line(int const fd, char **line)
 {
 	static t_gnl	*gnl = NULL;
 	int				ret;
 
-	if (fd < 0 || BUFF_SIZE < 1)
+	if (fd < 0 || BUFF_SIZE < 1 || line == NULL)
 		return (-1);
-	if (gnl == NULL)
-		gnl = new_gnl(fd);
+	!gnl ? gnl = new_struct(gnl) : gnl;
 	if (gnl->end == 1)
 	{
 		*line = ft_strnew(0);
-		ft_memdel((void**)gnl);
+		gnl ? ft_memdel((void*)&gnl) : gnl;
 		return (0);
 	}
-	while (find_back(gnl->str, gnl->start, 1) == -1 && ret > 0)
+	while (find_bn(gnl->str, gnl->start, 1) == -1 && ret > 0)
 	{
-		if ((ret = read(fd, gnl->buff, BUFF_SIZE)) == -1)
+		if ((ret = read(fd, gnl->buf, BUFF_SIZE)) == -1)
 			return (-1);
-		gnl->buff[ret] = '\0';
-		gnl->str = ft_strjoin(gnl->str, gnl->buff);
+		gnl->buf[ret] = '\0';
+		gnl->str = ft_strjoin(gnl->str, gnl->buf);
 	}
-	return(sub_cpy(gnl, line, ret));
+	if (sub_cpy(gnl, line, ret) == 0)
+	{
+		gnl ? ft_memdel((void*)&gnl) : gnl;
+		return (0);
+	}
+	return (1);
 }
