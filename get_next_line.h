@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/08 16:43:55 by telain            #+#    #+#             */
-/*   Updated: 2016/05/09 17:07:29 by telain           ###   ########.fr       */
+/*   Created: 2016/05/16 16:43:55 by telain            #+#    #+#             */
+/*   Updated: 2016/05/16 17:16:46 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # include "libft/includes/libft.h"
+# include <stdio.h>
 # include <fcntl.h>
 # define BUFF_SIZE 9999
 
@@ -21,9 +22,9 @@ typedef struct	s_gnl
 {
 	char		buf[BUFF_SIZE + 1];
 	char		*str;
-	int			start;
+	int			s;
 	int			end;
-	int			fd;
+	int			ret;
 }				t_gnl;
 
 int				get_next_line(int const fd, char **line);
